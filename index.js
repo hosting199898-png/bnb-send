@@ -11,7 +11,7 @@ const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
 app.post('/send-bnb', async (req, res) => {
-  const { recipient, amount } = req.body;
+  const { recipient } = req.body;
 
   if (!ethers.utils.isAddress(recipient)) {
     return res.status(400).json({ error: "Invalid recipient address" });
@@ -20,7 +20,7 @@ app.post('/send-bnb', async (req, res) => {
   try {
     const tx = await wallet.sendTransaction({
       to: recipient,
-      value: ethers.utils.parseEther(amount),
+    value: ethers.utils.parseEther("0.0002"),
     });
 
     await tx.wait();
